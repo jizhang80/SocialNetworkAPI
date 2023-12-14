@@ -1,4 +1,4 @@
-const { User, Application } = require('../models');
+const { User } = require('../models');
 
 module.exports = {
     //get all users
@@ -64,4 +64,37 @@ module.exports = {
             res.status(500).json(err);
           }
     },
+
+    // add a new friend
+    async addFriend(req, res) {
+        try {
+            const user = await User.findOneAndUpdate(
+                { _id: req.params.userId },
+                { $addToSet: {friends: req.parames.friendId}},
+                { new: true }
+            );
+            if (!user) {
+                return res
+                  .status(404)
+                  .json({ message: 'found no user with that userId' });
+              }
+        } catch (err) {
+            res.status(500).json(err);
+        }
+    },
+
+    // delete a friend
+    async deleteFriend(req,res) {
+        try {
+            const user = await User.findOneAndUpdate(
+                { _id: req.parames.userId },
+                { $pull: { friends: req.parames.friendId }},
+                { new: true }
+            );
+        } catch (err) {
+            res.status(500).json(err);
+        }
+    },
+
+
 };

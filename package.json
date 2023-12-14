@@ -1,0 +1,19 @@
+{
+  "name": "socialnetworkapi",
+  "version": "1.0.0",
+  "description": "a sample social network api",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/jizhang80/SocialNetworkAPI.git"
+  },
+  "author": "JimmyZ",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jizhang80/SocialNetworkAPI/issues"
+  },
+  "homepage": "https://github.com/jizhang80/SocialNetworkAPI#readme"
+}

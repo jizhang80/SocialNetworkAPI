@@ -38,7 +38,7 @@ module.exports = {
     async updateThought(req, res) {
         try {
             const thought = await Thought.findOneAndUpdate(
-                {_id: req.parames.thoughtId},
+                {_id: req.params.thoughtId},
                 req.body
             );
             if (!thought) {
@@ -68,7 +68,7 @@ module.exports = {
         try {
             const thought = await Thought.findOneAndUpdate(
                 { _id: req.params.thoughtId },
-                { $addToSet: {reactions: req.parames.reactionId}},
+                { $addToSet: {reactions: req.params.reactionId}},
                 { new: true }
             );
             if (!thought) {
@@ -85,8 +85,8 @@ module.exports = {
     async deleteReaction(req, res) {
         try {
             const thought = await Thought.findOneAndUpdate(
-                { _id: req.parames.thoughtId },
-                { $pull: { reactions: req.parames.reactionId }},
+                { _id: req.params.thoughtId },
+                { $pull: { reactions: req.params.reactionId }},
                 { new: true }
             );
             if (!thought) {

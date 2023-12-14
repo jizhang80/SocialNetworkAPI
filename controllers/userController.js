@@ -37,14 +37,16 @@ module.exports = {
     // update a user
     async updateUser(req, res) {
         try {
+            console.log("update");
             const user = await User.findOneAndUpdate(
-                {_id: req.parames.userId},
+                {_id: req.params.userId},
                 req.body
             );
             if (!user) {
                 return res.status(404).json({ message: 'No user with that ID' });
             }
         } catch (err) {
+            console.error(err)
             res.status(500).json(err);
         }
     },
@@ -72,7 +74,7 @@ module.exports = {
         try {
             const user = await User.findOneAndUpdate(
                 { _id: req.params.userId },
-                { $addToSet: {friends: req.parames.friendId}},
+                { $addToSet: {friends: req.params.friendId}},
                 { new: true }
             );
             if (!user) {
@@ -89,8 +91,8 @@ module.exports = {
     async deleteFriend(req,res) {
         try {
             const user = await User.findOneAndUpdate(
-                { _id: req.parames.userId },
-                { $pull: { friends: req.parames.friendId }},
+                { _id: req.params.userId },
+                { $pull: { friends: req.params.friendId }},
                 { new: true }
             );
             if (!user) {
@@ -98,6 +100,7 @@ module.exports = {
                   .status(404)
                   .json({ message: 'found no user with that userId' });
               }
+            res.status(200).json(user);
         } catch (err) {
             res.status(500).json(err);
         }

@@ -12,9 +12,19 @@ const reactionSchema = new Schema (
         createdAt: {
             type: Date,
             default: Date.now,
-            get: (date) => date.toDateString(),
+            get: (date) => {
+                const dt = date.toISOString().split(/[-T .:]/);;
+                return (`${dt[0]}-${dt[1]-1}-${dt[2]} ${dt[3]}:${dt[4]}`)
+            },
         },
     },
+    {
+        toJSON: {
+            virtuals: true,
+            getters: true,
+        },
+        id: false,
+    }
 );
 
 const Reaction = model('reaction', reactionSchema);

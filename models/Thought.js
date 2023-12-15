@@ -11,7 +11,10 @@ const thoughtSchema = new Schema (
         createdAt: {
             type: Date,
             default: Date.now,
-            get: (date) => date.toDateString(),
+            get: (date) => {
+                const dt = date.toISOString().split(/[-T .:]/);;
+                return (`${dt[0]}-${dt[1]-1}-${dt[2]} ${dt[3]}:${dt[4]}`)
+            },
         },
         username: { type: String, required: true },
         reactions: [{
@@ -22,6 +25,7 @@ const thoughtSchema = new Schema (
     {
         toJSON: {
             virtuals: true,
+            getters: true,
         },
         id: false,
     }

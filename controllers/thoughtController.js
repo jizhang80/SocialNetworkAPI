@@ -44,6 +44,7 @@ module.exports = {
             if (!thought) {
                 return res.status(404).json({ message: 'No thought with that ID' });
             }
+            res.json(thought);
         } catch (err) {
             res.status(500).json(err);
         }
@@ -76,6 +77,7 @@ module.exports = {
                   .status(404)
                   .json({ message: 'found no thought with that thoughtId' });
               }
+            res.json(thought);
         } catch (err) {
             res.status(500).json(err);
         }
@@ -94,6 +96,7 @@ module.exports = {
                   .status(404)
                   .json({ message: 'found no thought with that thoughtId' });
               }
+            res.json(thought);
         } catch (err) {
             res.status(500).json(err);
         }

@@ -83,6 +83,7 @@ module.exports = {
                   .status(404)
                   .json({ message: 'found no user with that userId' });
               }
+            res.json(user)
         } catch (err) {
             res.status(500).json(err);
         }

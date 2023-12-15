@@ -1,4 +1,4 @@
-const { Thought, Reaction } = require('../models');
+const { Thought, User } = require('../models');
 
 module.exports = {
     //get all thoughts
@@ -29,7 +29,12 @@ module.exports = {
     async createThought(req, res) {
         try {
             const thought = await Thought.create(req.body);
-            res.json(thought);
+            const user = await User.findOneAndUpdate(
+                { _id: req.body.userId },
+                { $addToSet: {thoughts: thought._id}},
+                { new: true }
+            );
+            res.json({thought: thought, user: user});
           } catch (err) {
             res.status(500).json(err);
           }

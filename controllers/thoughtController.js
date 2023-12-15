@@ -1,4 +1,4 @@
-const { Thought, User } = require('../models');
+const { Thought, User, Reaction } = require('../models');
 
 module.exports = {
     //get all thoughts
@@ -79,9 +79,10 @@ module.exports = {
     // create a reaction in a single thought by thoughtId
     async createReaction(req, res) {
         try {
+            const reaction = await Reaction.create(req.body);
             const thought = await Thought.findOneAndUpdate(
                 { _id: req.params.thoughtId },
-                { $addToSet: {reactions: req.params.reactionId}},
+                { $addToSet: {reactions: reaction._id}},
                 { new: true }
             );
             if (!thought) {
@@ -89,7 +90,10 @@ module.exports = {
                   .status(404)
                   .json({ message: 'found no thought with that thoughtId' });
               }
-            res.json(thought);
+            res.json({
+                reaction: reaction,
+                thought: thought
+            });
         } catch (err) {
             res.status(500).json(err);
         }
@@ -98,6 +102,7 @@ module.exports = {
     // delete a reaction in a single thought by reactionId
     async deleteReaction(req, res) {
         try {
+            const reaction = await Reaction.findOneAndDelete({ _id: req.params.reactionId });
             const thought = await Thought.findOneAndUpdate(
                 { _id: req.params.thoughtId },
                 { $pull: { reactions: req.params.reactionId }},
